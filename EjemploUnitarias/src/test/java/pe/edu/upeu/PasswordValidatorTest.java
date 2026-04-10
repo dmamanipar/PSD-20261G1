@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class PasswordValidatorTest {
+class PasswordValidatorTest {
 
     private PasswordValidator validator;
 

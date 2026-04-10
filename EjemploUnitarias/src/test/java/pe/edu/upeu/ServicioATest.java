@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 @DisplayName("Calc Basic")
-public class ServicioATest {
+class ServicioATest {
     private ServicioA servicioA;
     @BeforeAll
     static void setup(){
