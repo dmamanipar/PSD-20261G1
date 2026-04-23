@@ -94,11 +94,11 @@
 			<version>2.3.0</version>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.7.0</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.mapstruct</groupId>
@@ -182,6 +182,7 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
+		<!-- Core de Testcontainers -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>testcontainers</artifactId>
@@ -205,7 +206,6 @@
 			<version>3.3.6</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -252,6 +252,7 @@
 
 			<!-- Para Sonar Qube -->
 			<plugin>
+				<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.10</version>
@@ -283,10 +284,12 @@
 				<version>3.2.5</version>
 				<configuration>
 					<environmentVariables>
+
 						<DOCKER_HOST>npipe:////./pipe/dockerDesktopLinuxEngine</DOCKER_HOST>
 					</environmentVariables>
 				</configuration>
 			</plugin>
+
 
 		</plugins>
 	</build>

@@ -17,15 +17,18 @@ import pe.edu.upeu.sysalmacen.servicio.impl.CategoriaServiceImp;
 import java.util.List;
 import java.util.Optional;
 import static org.mockito.BDDMockito.*;
+
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Pruebas unitarias - CategoriaService")
 class CategoriaServiceTest {
+
     @Mock
     private ICategoriaRepository repo;
 
     @InjectMocks
     private CategoriaServiceImp categoriaService;
+
     private Categoria categoria;
 
     @BeforeEach

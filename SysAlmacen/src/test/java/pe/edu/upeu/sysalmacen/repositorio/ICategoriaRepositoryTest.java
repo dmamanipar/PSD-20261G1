@@ -39,10 +39,19 @@ class ICategoriaRepositoryTest {
 
     @Autowired
     private ICategoriaRepository categoriaRepository;
+
+    @Autowired
+    private IProductoRepository productoRepository;
+
+    @Autowired
+    private IVentaDetalleRepository ventaDetalleRepository;
+
     private Categoria categoriaGuardada;
 
     @BeforeEach
     void setUp() {
+        ventaDetalleRepository.deleteAll();
+        productoRepository.deleteAll();
         categoriaRepository.deleteAll();
         categoriaGuardada = categoriaRepository.save(
                 Categoria.builder().nombre("Electrónica").build());
@@ -134,8 +143,7 @@ class ICategoriaRepositoryTest {
         long totalAntes = categoriaRepository.count();
         categoriaRepository.deleteById(categoriaGuardada.getIdCategoria());
 
-        Assertions.assertThat(categoriaRepository.count()).isEqualTo(totalAntes -
-                1);
+        Assertions.assertThat(categoriaRepository.count()).isEqualTo(totalAntes -1);
     }
 
 
