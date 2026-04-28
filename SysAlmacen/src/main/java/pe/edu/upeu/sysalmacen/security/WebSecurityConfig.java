@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -53,6 +54,34 @@ public class WebSecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .csrf(csrf -> csrf.disable())
+                // ── HTTP Security Headers (ISO 27001, OWASP)
+                .headers(headers -> headers
+                        // Evita MIME-type sniffing (CWE-430)
+                        .contentTypeOptions(Customizer.withDefaults())
+                        // Protección contra clickjacking
+                        .frameOptions(frame -> frame.deny())
+                        // HSTS: fuerza HTTPS por 1 año, incluye subdominios
+                        .httpStrictTransportSecurity(hsts -> hsts
+                                .includeSubDomains(true)
+                                .maxAgeInSeconds(31536000))
+                        // Content Security Policy: solo permite recursos del mismo origen
+                        // Ajusta 'connect-src' con tu dominio de API en producción
+                        .contentSecurityPolicy(csp -> csp
+                                .policyDirectives(
+                                        "default-src 'self'; " +
+                                                "script-src 'self'; " +
+                                                "style-src 'self'; " +
+                                                "img-src 'self' data: res.cloudinary.com; " +
+                                                "connect-src 'self'; " +
+                                                "frame-ancestors 'none'"
+                                ))
+                        // Headers adicionales de seguridad via headerWriter
+                        .addHeaderWriter((request, response) -> {
+                            response.setHeader("Referrer-Policy",    "strict-origin-when-cross-origin");
+                            response.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+                            response.setHeader("X-Permitted-Cross-Domain-Policies", "none");
+                        })
+                )
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(HttpMethod.POST, "/users/login",
                                 "users/register").permitAll()
