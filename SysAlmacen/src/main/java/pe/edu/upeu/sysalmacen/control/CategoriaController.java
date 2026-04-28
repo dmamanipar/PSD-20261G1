@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pe.edu.upeu.sysalmacen.dtos.CategoriaDTO;
+import pe.edu.upeu.sysalmacen.excepciones.CustomResponse;
 import pe.edu.upeu.sysalmacen.mappers.CategoriaMapper;
 import pe.edu.upeu.sysalmacen.modelo.Categoria;
 import pe.edu.upeu.sysalmacen.servicio.ICategoriaService;
@@ -30,13 +31,15 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaMapper.toDTO(obj));
     }
     @PostMapping
-    public ResponseEntity<Void> save(@Valid @RequestBody CategoriaDTO dto) {
+    public ResponseEntity<CustomResponse> save(@Valid @RequestBody CategoriaDTO dto) {
         Categoria obj = categoriaService.save(categoriaMapper.toEntity(dto));
         URI location =
                 ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(
                         obj.getIdCategoria()).toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(CustomResponse.created("Se ha creado correctamente",
+                location.getPath()));
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaDTO> update(@Valid @PathVariable("id") Long
                                                        id, @RequestBody CategoriaDTO dto) {
