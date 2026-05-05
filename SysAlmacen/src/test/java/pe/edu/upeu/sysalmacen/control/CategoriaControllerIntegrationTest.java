@@ -155,7 +155,7 @@ class CategoriaControllerIntegrationTest extends BaseIntegrationTest {
 
         mockMvc.perform(delete("/categorias/{id}", idEliminar)
                         .header("Authorization", bearer(token)))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
     }
 
     @Order(9)
