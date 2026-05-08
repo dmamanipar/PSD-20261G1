@@ -29,7 +29,7 @@ pipeline {
                 timeout(time: 2, unit: 'MINUTES') {
                     git branch: 'main',
                         credentialsId: 'github-token',
-                        url: 'https://github.com/dmamanipar/PSD-DMP.git'
+                        url: 'https://github.com/dmamanipar/PSD-20261G1.git'
                 }
             }
         }
