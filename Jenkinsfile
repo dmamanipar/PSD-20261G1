@@ -66,6 +66,9 @@ pipeline {
         }
 
         stage('Sonar') {
+			tools {
+				jdk 'JDK21'
+			}
             steps {
                 timeout(time: 4, unit: 'MINUTES') {
                     withSonarQubeEnv('sonarqube') {
@@ -82,6 +85,9 @@ pipeline {
         }
 
         stage('Quality Gate') {
+			tools {
+				jdk 'JDK21'
+			}
             steps {
                 sleep(10)
                 timeout(time: 4, unit: 'MINUTES') {
